@@ -63,43 +63,7 @@ ln -s "$PWD/model-pr-optimization-history" "$SKILL_DIR/model-pr-history-knowledg
 
 下面是这个 SKILL 的流程图。核心思想是把 benchmark gate、profile gate、patch loop 和 final report 串成一条闭环。
 
-```mermaid
-flowchart TD
-    A[输入模型 / GPU / 精度 / SLA / artifact_root] --> B[创建 campaign 目录]
-    B --> C[读取模型族 PR 历史和已知优化记录]
-    C --> D[固定公平 Benchmark Gate]
-    D --> D1[SGLang bounded search]
-    D --> D2[vLLM bounded search]
-    D --> D3[TensorRT-LLM PyTorch backend search]
-    D1 --> E[生成 candidates.jsonl / summary.md / winning-commands.md]
-    D2 --> E
-    D3 --> E
-    E --> F{SGLang 是否稳定落后超过阈值}
-    F -->|否| Z[写 final_report.md 结束]
-    F -->|是| G[Profile SGLang 和领先框架]
-    G --> H[生成 kernel / overlap / fuse 三张表]
-    H --> I[写 root-cause.md]
-    I --> J{是否需要额外分析}
-    J -->|capacity gap| J1[capacity planner]
-    J -->|layer 不清楚| J2[pipeline analysis]
-    J -->|operator 证据不足| J3[compute simulation]
-    J -->|不需要| K[生成 Humanize refined plan]
-    J1 --> K
-    J2 --> K
-    J3 --> K
-    K --> L[模型级 RLCR patch loop]
-    L --> M[选择一个证据最强的 SGLang patch]
-    M --> N{是否是明确 kernel bottleneck}
-    N -->|是| O[KernelPilot knowledge / ncu-report 辅助]
-    N -->|否| P[普通 SGLang runtime/backend patch]
-    O --> Q[实现 patch + 测试]
-    P --> Q
-    Q --> R[真实模型 benchmark / profile / accuracy]
-    R --> S[更新 checkpoint 和 ledgers]
-    S --> T{达到 stop condition}
-    T -->|否| L
-    T -->|是| Z
-```
+![sglang-sota-humanize-loop 流程图](https://mermaid.ink/img/pako:eNp9VNFOG0cU_ZUrv7YOAt7yUClAYgImcYz7kokVDbtje-v1zGp2N8i1kRypJk5JwGpaSoBAiQolVWUQtJQa4v4Ms7v-i4xnd4PpQ_2w2js-5-659565tYTGdJK4nSiYbFErYe5AbuoJBfm7g4LeG9Hc9w73xM4KjEAq87V8-ic90T2QL_PpO_IpGUYBa85TzpiTh2TyK5hAorUlLrqg4YqFjSIFf6sjPv6UD_NOKNAkCo4uxNp6mN37eQ0yWRCry2LtRPzwSvx94u_uX11uiFfrQef4mjypyFNIbHVFZ1M0_xD_nMIEoVqpgnkZUtghEXIqRI6i-VQa0yIsMJfqRAebYK6VboLG0LN0eu5_IeMoR6jNeDaXHEAz1RyTGFjAWpnQ_1JGFecu8n_c9Vpt2QeqG7qUZt_6xmbUlG2z3YoUXL1V0WWwaFBq0GJSY_KQ6rY8jTONhZmiaHw4uquCe7WoPm_jSLQP_MNT2Zeg_VG0V4OzZvDvi_5GSzQul0LOvQGnLnF1eIzE8lsoGBSbTzmxGHcGYvyLN9673fwwWiauQwplOCsYJoHoc3JI_ffLotny9pa9nbOIkVKapuPCy4RTMiiXPSPcxJZ8K7g2gavzl-Lyl2DvMKJNK9p9pWjgo6SGJey6DffV_zO1sMb-diM4eN5__078ui5a8uvtqLoZpVfDFtYMpwpFbNVhZhR9PrBMTCnh-WG0iauES0GvvfOmt78pCWPIMixiGpQAls2p2oZ9g8EswrHDOARHz73XHUkNzk4lbxzJ-VmuQ8A2Kq6JHYPRG0SJDKXXYTbu0LQrJ258S4ATOQrpvYHGmBXaaDaKxm5E48PRrArSKLxMfvc3yKYns2BhR1rUZMyKMqYVbg71Gy-9lQ9X542r89_DKrzthrjs-pvfxfNV3Ig2p2gPovbLp7ex6u914vEuMMcxCSVaOZrDg2vfPESzCpQxTOZAmbJFk-hFIo1ANTcZ-g6CXlN8_yE_TFYWzSDvbaff2Iw1cZc6RoWMxJduWONDpfEREp0df_U4Kv0L8P5aCY7i5ZEJMWHwSAVZ5G_vSk605BY-b5IRsCLDyx2naS7HWjVKk1XMeeRt_emtH4NWkpVbzKDO4FKAqo_HlplX2Fwt6PVE6xhsh1mgMbkOBu6I2pW7rjg9fKIa-DjxZaJCeAUbeuJ2LeGUSGWwrnVSwK7pJJaWPgFeXkg9?type=png&bgColor=white)
 
 这个图看起来长，但实际就是一句话：先证明差距，再定位差距，再改 SGLang，再用同一个真实 workload 验证。
 
