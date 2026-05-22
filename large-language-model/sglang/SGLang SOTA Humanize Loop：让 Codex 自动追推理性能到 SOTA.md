@@ -2,7 +2,11 @@
 
 # 0x0. 前言
 
-先宣传一下这个仓库：AI-Infra-Auto-Driven-SKILLS(https://github.com/BBuf/AI-Infra-Auto-Driven-SKILLS) 是我最近在整理的一套面向 AI Infra / LLM Serving 的 Agent SKILLS。这里更偏可直接执行的工程 playbook，覆盖 SGLang、vLLM、TensorRT-LLM 的 benchmark，torch profiler 分析，SGLang PR review，线上 serving incident triage，模型优化 PR 历史知识库等等。如果你也在做推理框架开发，或者经常需要让 Agent 帮你跑 benchmark、看 profile、追性能、查历史 PR，可以先 star 一下这个仓库，后面我也会继续往里面补更多模型优化和生产排障相关的 SKILL。
+![](https://files.mdnice.com/user/59/7073bcef-a797-4e37-a1bc-8e791570e803.png)
+
+先宣传一下这个仓库：AI-Infra-Auto-Driven-SKILLS(https://github.com/BBuf/AI-Infra-Auto-Driven-SKILLS)。如果你也在做推理框架开发，或者经常需要让 Agent 帮你跑 benchmark、看 profile、追性能、查历史 PR，欢迎顺手点个 Star。后面我会继续把 SGLang、vLLM、TensorRT-LLM 相关的模型优化和生产排障经验整理进去。
+
+AI-Infra-Auto-Driven-SKILLS 是我最近在整理的一套面向 AI Infra / LLM Serving 的 Agent SKILLS。这里更偏可直接执行的工程 playbook，覆盖 SGLang、vLLM、TensorRT-LLM 的 benchmark，torch profiler 分析，SGLang PR review，线上 serving incident triage，模型优化 PR 历史知识库等等。
 
 安装也很简单。以 Codex 为例，可以直接把几个核心 skill 和模型 PR 历史知识库 symlink 到本地 skill 目录：
 
