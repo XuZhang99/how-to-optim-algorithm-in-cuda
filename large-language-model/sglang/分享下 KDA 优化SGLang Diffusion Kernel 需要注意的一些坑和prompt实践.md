@@ -2,7 +2,7 @@
 
 本文记录最近使用 KDA（https://github.com/mit-han-lab/kernel-design-agents） 优化 SGLang Diffusion Kernel 的流程。主要内容包括流程中暴露出的工程问题和解决方法、prompt 约束和验证规则。
 
-在此前 kernel-pilot 的 Humanize loop 方式（https://mp.weixin.qq.com/s/pScZ_9cA-6cWUPjfcGjNyg）和部分公开 Kernel Agent 框架的基础上，kernel-pilot 最近切换到 KDA 风格的任务组织方式。该组织方式将每个 kernel 拆成独立任务目录，保留 prompt、baseline、benchmark、review 和结果记录，便于批量生成和验证 SGLang Diffusion Kernel 优化任务。相关仓库为 https://github.com/BBuf/kernel-pilot。
+在此前 kernel-pilot 的 [Humanize loop 方式](https://mp.weixin.qq.com/s/pScZ_9cA-6cWUPjfcGjNyg) 和部分公开 Kernel Agent 框架的基础上，kernel-pilot 最近切换到 KDA 风格的任务组织方式。该组织方式将每个 kernel 拆成独立任务目录，保留 prompt、baseline、benchmark、review 和结果记录，便于批量生成和验证 SGLang Diffusion Kernel 优化任务。相关仓库为 https://github.com/BBuf/kernel-pilot。
 
 kernel-pilot 中的 SGLang Diffusion Kernel 任务已经被封装成可直接启动的脚本：
 
