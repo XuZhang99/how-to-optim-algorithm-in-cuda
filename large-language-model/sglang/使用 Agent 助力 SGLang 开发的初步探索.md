@@ -288,7 +288,9 @@ Agent 时代的 SGLang 开发，不会把开发者从系统里拿掉。更现实
 
 感谢参与 SGLang Agent skills 建设的 SGLang Team 成员和贡献者：Xiaoyu Zhang (BBuf), Lianmin Zheng, Liangsheng Yin, Ke Bao, fzyzcjy, Kangyan Zhou, DarkSharpness, Mick, Alison Shao, Baizhou Zhang, Bingxu Chen, Cheng Wan, Ratish P, shuwenn, ykcai-daniel, Yuhao Yang，以及 Artem Savkin.
 
-感谢 Humanize 团队和贡献者：Sihao Liu, Zenus Zhang, shinan6, DYZhang, Chao Liu, Ligeng Zhu, Zhou Yaoyang, gyy0592, AcrossForest, Emin, Qiming Chu, jiaxiaoyu, tastynoob，以及 zhenwei.
+感谢 KDA 团队：Dongyun Zou, Ligeng Zhu, Sihao Liu, Junxian Guo, Yixin Dong, Zijian Zhang，以及 Hao Kang.
+
+感谢 Humanize 团队和贡献者：Sihao Liu, Ligeng Zhu, Zijian Zhang, Zenus Zhang, shinan6, DYZhang, Chao Liu, Zhou Yaoyang, gyy0592, AcrossForest, Emin, Qiming Chu, jiaxiaoyu, tastynoob，以及 zhenwei.
 
 ## 13. 参考资料
 
@@ -297,6 +299,9 @@ Agent 时代的 SGLang 开发，不会把开发者从系统里拿掉。更现实
 - [SGLang diffusion `.claude/skills`](https://github.com/sgl-project/sglang/tree/main/python/sglang/multimodal_gen/.claude/skills)
 - [AI-Infra-Auto-Driven-SKILLS](https://github.com/BBuf/AI-Infra-Auto-Driven-SKILLS)
 - [AI-Infra-Auto-Driven-SKILLS prompts](https://github.com/BBuf/AI-Infra-Auto-Driven-SKILLS/tree/main/prompts)
+- [Kernel Design Agents (KDA)](https://github.com/mit-han-lab/kernel-design-agents)
+- [KernelWiki skill](https://github.com/mit-han-lab/KernelWiki)
+- [ncu-report-skill](https://github.com/DongyunZou/ncu-report-skill)
 - [KDA-Pilot](https://github.com/BBuf/KDA-Pilot)
 - [SGLang Diffusion Advanced Optimizations, LMSYS Blog](https://lmsys.org/blog/2026-02-16-sglang-diffusion-advanced-optimizations/)
 - [OpenAI Codex Prompting: Goal mode](https://developers.openai.com/codex/prompting#goal-mode)
