@@ -138,19 +138,19 @@ SGLang SOTA Performance Loop 就是建立在 Humanize/RLCR 上的一套 Loop Eng
 5. 只 patch 有证据支持的路径。例如 hybrid attention、Mamba/GDN、radix cache、target verify、CUDA graph、MoE/EP、quant kernel 或 model wrapper。
 6. 回到同一 workload 复测。每一轮都记录 benchmark、profile、accuracy、失败尝试、环境信息和清理动作。
 
-在 Qwen3.6-35B-A3B-FP8 的 B200/H200 实验中，同一模型在不同硬件上的瓶颈并不相同。B200 上，固定 workload 下 SGLang baseline 已经超过 vLLM；继续 profile 后仍然发现 GDN prefill split 存在优化空间，patch 后 chat 和 long 场景 output tok/s 均继续提升约 `2.6%`。H200 上，需要结合 FP8 MoE Triton configs、CUTLASS scaled-mm replacement path、GDN backend 默认值等改动，才能追平并超过 vLLM。类似任务如果拆成多个独立 prompt，benchmark、profile、失败尝试和中间结论很容易丢失；放进带证据和审查的 loop 里，更容易保持前后条件一致。
+对于 `Qwen/Qwen3-Next-80B-A3B-Instruct-FP8` 这类 2x B200 目标，loop 的价值在于把 benchmark 结果、profile trace、失败 patch 和中间结论都绑定到同一个模型、硬件、workload 和 framework commit 上。类似任务如果拆成多个独立 prompt，很容易忘记哪个命令产出了哪个结果，或者后续 profile 是否还对应最初 baseline。放进带证据和审查的 loop 里，更容易保持前后条件一致。
 
 ### 4.3 Codex Goal: 成本更低的完整平替
 
 上面的 SGLang SOTA Performance Loop 采用双角色协作：Claude Code 执行 benchmark、profile、patch、revalidate，Codex Review 在每轮结束后做审查。这种方式适合严肃 PR，但每轮都要同时消耗执行模型和 review 模型，成本会更高，等待链路也更长。
 
-Codex Goal 给了另一种实现方式。把“公平 benchmark -> gap decision -> profile -> patch -> revalidate -> artifact ledger”写进一个持续 Goal 后，可以直接让更便宜的 GPT-5.5 在同一个目标里完成执行、自检和复测。这样仍然保留 SGLang SOTA Performance Loop 的核心约束：固定 workload、证据驱动 patch、同一实验条件复测、每轮更新 artifact manifest。
+Codex Goal 给了另一种实现方式。把“公平 benchmark -> gap decision -> profile -> patch -> revalidate -> artifact ledger”写进一个持续 Goal 后，可以让一个 Codex Goal 在同一个目标里完成执行、自检和复测，不再依赖双角色执行/审查设置。这样仍然保留 SGLang SOTA Performance Loop 的核心约束：固定 workload、证据驱动 patch、同一实验条件复测、每轮更新 artifact manifest。
 
 两种方式的差异如下：
 
 | 维度 | Humanize/RLCR SOTA Loop | Codex Goal |
 | --- | --- | --- |
-| 执行方式 | Claude Code 做实现和实验，Codex Review 做每轮审查 | GPT-5.5 在同一个 Goal 里持续执行、自检和复测 |
+| 执行方式 | Claude Code 做实现和实验，Codex Review 做每轮审查 | 一个 Codex Goal 持续执行、自检和复测 |
 | 状态位置 | `.humanize/rlcr/...` 里的 plan、prompt、summary、review result | 当前 Goal 线程 + `artifact_root` 里的 manifest/evidence |
 | 审查方式 | Stop hook + Codex Review + git/state/schema 检查 | Goal 内自检 + artifact contract + 人工抽查 |
 | 成本 | 两个模型角色参与，单轮成本更高 | 单个 Goal 承载执行和检查，成本更低 |
@@ -197,7 +197,7 @@ artifact_root:
 Codex Goal 版本：
 
 ```text
-/goal Using GPT-5.5, keep optimizing SGLang serving for
+/goal Keep optimizing SGLang serving for
 `Qwen/Qwen3-Next-80B-A3B-Instruct-FP8` on a single node with 2 NVIDIA B200
 GPUs until SGLang matches or exceeds the best reproducible vLLM/TensorRT-LLM
 result under the same 2-GPU budget, FP8 precision, workload, SLA, model, and
@@ -275,7 +275,7 @@ KDA-Pilot 的实验里，有两条规则最值得保留：
 ## 6. 几条实践规则
 
 1. 先定义任务边界，再启动 Agent。
-“优化 SGLang”太大，“给 `Qwen/Qwen3.6-35B-A3B-FP8` 在 1x H200、固定 `1000->1000` 和 `8000->1000` workload 下追平 vLLM”才是一个可执行目标。
+“优化 SGLang”太大，“给 `Qwen/Qwen3-Next-80B-A3B-Instruct-FP8` 在 2x B200、固定 `1000->1000` 和 `8000->1000` workload 下追平 vLLM”才是一个可执行目标。
 
 2. 先固定 benchmark，再看 profile。
 如果 workload 可以在看到结果后改变，Agent 很容易无意中优化到一个更简单的问题。SOTA loop 和 KDA-Pilot 都把固定 workload 放在 patch 之前。
