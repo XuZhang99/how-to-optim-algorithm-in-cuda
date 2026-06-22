@@ -7,7 +7,8 @@
 围绕 SGLang agent 开发，已经有一批面向 LLM 和 diffusion 的 skills：
 
 - [BBuf/AI-Infra-Auto-Driven-SKILLS](https://github.com/BBuf/AI-Infra-Auto-Driven-SKILLS) 覆盖 serving benchmark、profile analysis、production incident triage、SOTA loop 等流程。
-- [BBuf/KDA-Pilot](https://github.com/BBuf/KDA-Pilot) 围绕 SGLang diffusion kernel 做自动优化实验。
+- [kernel-design-agents](https://github.com/mit-han-lab/kernel-design-agents) 是 KDA 项目，也是 MLSys 2026 FlashInfer Kernel Contest 的 winning solution。
+- [BBuf/KDA-Pilot](https://github.com/BBuf/KDA-Pilot) 将 KDA 风格的 agent kernel workflow 用到 SGLang 上，已经优化了一批 LLM 和 diffusion kernel，在端到端模型性能上取得了加速，并正在推动相关代码 upstream 到 SGLang 主分支。
 
 把这些工作放在一起看，可以看到一个共同方向：Agent 的价值来自流程化的工程经验，包括可执行步骤、可复现实验和可审查证据。
 
