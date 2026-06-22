@@ -6,6 +6,8 @@
 
 围绕 SGLang agent 开发，已经有一批面向 LLM 和 diffusion 的 skills：
 
+- [SGLang `.claude/skills`](https://github.com/sgl-project/sglang/tree/main/.claude/skills) 维护在 SGLang 仓库内部，沉淀 repo-level 的开发流程，例如 CUDA crash debug、kernel 集成、测试、CI 和 profiling。
+- [SGLang diffusion `.claude/skills`](https://github.com/sgl-project/sglang/tree/main/python/sglang/multimodal_gen/.claude/skills) 面向 diffusion 相关流程，包括新增 diffusion 模型、benchmark/profile denoise 路径、调优性能选项，以及验证量化 pipeline。
 - [BBuf/AI-Infra-Auto-Driven-SKILLS](https://github.com/BBuf/AI-Infra-Auto-Driven-SKILLS) 覆盖 serving benchmark、profile analysis、production incident triage、SOTA loop 等流程。
 - [kernel-design-agents](https://github.com/mit-han-lab/kernel-design-agents) 是 KDA 项目，也是 MLSys 2026 FlashInfer Kernel Contest 的 winning solution。
 - [BBuf/KDA-Pilot](https://github.com/BBuf/KDA-Pilot) 将 KDA 风格的 agent kernel workflow 用到 SGLang 上。B200 diffusion 侧目前覆盖 7 个 SGLang kernel task，在 extracted production rows 上的 wall-geomean speedup 从 `1.1341x` 到 `2.7499x`。
@@ -318,8 +320,6 @@ Agent 时代的 SGLang 开发，不会把开发者从系统里拿掉。更现实
 - [KernelWiki skill](https://github.com/mit-han-lab/KernelWiki)
 - [ncu-report-skill](https://github.com/DongyunZou/ncu-report-skill)
 - [KDA-Pilot](https://github.com/BBuf/KDA-Pilot)
-- [SGLang PR #27392: Add B200 native diffusion norm-scale-shift fast path](https://github.com/sgl-project/sglang/pull/27392)
-- [SGLang PR #28051: Add B200 staged qknorm-rope fast path](https://github.com/sgl-project/sglang/pull/28051)
 - [SGLang Diffusion Advanced Optimizations, LMSYS Blog](https://lmsys.org/blog/2026-02-16-sglang-diffusion-advanced-optimizations/)
 - [OpenAI Codex Prompting: Goal mode](https://developers.openai.com/codex/prompting#goal-mode)
 - [Humanize](https://github.com/PolyArch/humanize)
