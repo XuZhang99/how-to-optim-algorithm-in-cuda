@@ -8,7 +8,7 @@
 
 - [BBuf/AI-Infra-Auto-Driven-SKILLS](https://github.com/BBuf/AI-Infra-Auto-Driven-SKILLS) 覆盖 serving benchmark、profile analysis、production incident triage、SOTA loop 等流程。
 - [kernel-design-agents](https://github.com/mit-han-lab/kernel-design-agents) 是 KDA 项目，也是 MLSys 2026 FlashInfer Kernel Contest 的 winning solution。
-- [BBuf/KDA-Pilot](https://github.com/BBuf/KDA-Pilot) 将 KDA 风格的 agent kernel workflow 用到 SGLang 上。B200 diffusion 侧目前覆盖 7 个 SGLang kernel task，在 extracted production rows 上的 wall-geomean speedup 从 `1.1341x` 到 `2.7499x`；LLM 侧 GLM-5.2 B200 campaign 则已经抽取 21 个 kernel-interface task 作为后续优化对象。
+- [BBuf/KDA-Pilot](https://github.com/BBuf/KDA-Pilot) 将 KDA 风格的 agent kernel workflow 用到 SGLang 上。B200 diffusion 侧目前覆盖 7 个 SGLang kernel task，在 extracted production rows 上的 wall-geomean speedup 从 `1.1341x` 到 `2.7499x`。
 
 把这些工作放在一起看，可以看到一个共同方向：Agent 的价值来自流程化的工程经验，包括可执行步骤、可复现实验和可审查证据。
 
@@ -252,7 +252,7 @@ KDA-Pilot 的思路是把 kernel 优化拆成独立任务，避免 Agent 在 SGL
 - 每轮迭代刷新 task prompt、benchmark evidence、KernelWiki 和 ncu-report-skill。
 - 允许 shape-specialized dispatch，但必须写清楚每个 bucket 的条件、路径、latency 和 fallback。
 
-一个具体快照是：KDA-Pilot 已经在 B200 上优化了 7 个 SGLang diffusion kernel task，在 extracted production rows 上的 wall-geomean speedup 从 `1.1341x` 到 `2.7499x`。LLM 侧，GLM-5.2 B200 capture 生成了 21 个 kernel-interface task；其中 4 个代表性任务是 per-token group quantization（`115,949` calls / `2,958` variants）、in-place RoPE（`25,181` / `262`）、grouped top-k（`17,404` / `131`）和 fused K-cache index store（`7,090` / `131`），都来自 6 组 workload。
+一个具体快照是：KDA-Pilot 已经在 B200 上优化了 7 个 SGLang diffusion kernel task，在 extracted production rows 上的 wall-geomean speedup 从 `1.1341x` 到 `2.7499x`。
 
 这些结果也开始进入 upstream 路径。[SGLang PR #27392](https://github.com/sgl-project/sglang/pull/27392) 给 Qwen-Image-2512 增加 B200 native diffusion norm-scale-shift fast path，在单张 B200 上报告 full request `1.081x`、denoise wall `1.093x` 加速。[SGLang PR #28051](https://github.com/sgl-project/sglang/pull/28051) 把 B200 `fused_inplace_qknorm_rope` 路径拆成单独改动，profiler 里 target qknorm+RoPE CUDA work 从 `24.087 ms / 1440 calls` 变为 `18.081 ms / 720 calls + 1.896 ms / 720 calls`，约 `1.21x` kernel-level speedup；它的 production end-to-end benchmark 是 parity，所以这部分证据应该按 target-kernel 改进来读，不能写成模型级收益。
 
