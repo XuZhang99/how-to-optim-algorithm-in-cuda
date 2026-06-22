@@ -254,7 +254,7 @@ KDA-Pilot 的思路是把 kernel 优化拆成独立任务，避免 Agent 在 SGL
 
 一个具体快照是：KDA-Pilot 已经在 B200 上优化了 7 个 SGLang diffusion kernel task，在 extracted production rows 上的 wall-geomean speedup 从 `1.1341x` 到 `2.7499x`。
 
-这些结果也开始进入 upstream 路径。[SGLang PR #27392](https://github.com/sgl-project/sglang/pull/27392) 给 Qwen-Image-2512 增加 B200 native diffusion norm-scale-shift fast path，在单张 B200 上报告 full request `1.081x`、denoise wall `1.093x` 加速。[SGLang PR #28051](https://github.com/sgl-project/sglang/pull/28051) 把 B200 `fused_inplace_qknorm_rope` 路径拆成单独改动，profiler 里 target qknorm+RoPE CUDA work 从 `24.087 ms / 1440 calls` 变为 `18.081 ms / 720 calls + 1.896 ms / 720 calls`，约 `1.21x` kernel-level speedup；它的 production end-to-end benchmark 是 parity，所以这部分证据应该按 target-kernel 改进来读，不能写成模型级收益。
+这些结果也开始进入 upstream 路径。[SGLang PR #27392](https://github.com/sgl-project/sglang/pull/27392) 给 Qwen-Image-2512 增加 B200 native diffusion norm-scale-shift fast path，在单张 B200 上报告 full request `1.081x`、denoise wall `1.093x` 加速。[SGLang PR #28051](https://github.com/sgl-project/sglang/pull/28051) 把 B200 `fused_inplace_qknorm_rope` 路径拆成单独改动，profiler 里 target qknorm+RoPE CUDA work 从 `24.087 ms / 1440 calls` 变为 `18.081 ms / 720 calls + 1.896 ms / 720 calls`，约 `1.21x` kernel-level speedup。
 
 ![KDA-Pilot B200 diffusion kernel results](https://raw.githubusercontent.com/BBuf/how-to-optim-algorithm-in-cuda/master/large-language-model/sglang/assets/kda-pilot-b200-speedups.svg)
 
