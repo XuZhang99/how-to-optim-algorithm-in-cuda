@@ -305,7 +305,7 @@ Agent 时代的 SGLang 开发，不会把开发者从系统里拿掉。更现实
 
 感谢参与 SGLang agent skills 建设的 SGLang Team 成员和贡献者：Xiaoyu Zhang (BBuf), Lianmin Zheng, Liangsheng Yin, Ke Bao, fzyzcjy, Kangyan Zhou, DarkSharpness, Mick, Alison Shao, Baizhou Zhang, Bingxu Chen, Cheng Wan, Ratish P, shuwenn, ykcai-daniel, Yuhao Yang，以及 Artem Savkin.
 
-感谢 KDA 团队：Dongyun Zou, Ligeng Zhu, Sihao Liu, Junxian Guo, Yixin Dong, Zijian Zhang，以及 Hao Kang.
+感谢 KDA 团队：Dongyun Zou, Ligeng Zhu, Sihao Liu, Junxian Guo, Yixin Dong, Zijian Zhang, Hao Kang，以及 Song Bian.
 
 感谢 Humanize 团队和贡献者：Sihao Liu, Ligeng Zhu, Zijian Zhang, Zenus Zhang, shinan6, DYZhang, Chao Liu, Zhou Yaoyang, gyy0592, AcrossForest, Emin, Qiming Chu, jiaxiaoyu, tastynoob，以及 zhenwei.
 
