@@ -256,7 +256,9 @@ KDA-Pilot 的思路是把 kernel 优化拆成独立任务，避免 Agent 在 SGL
 
 一个具体快照是：KDA-Pilot 已经在 B200 上优化了 7 个 SGLang diffusion kernel task，在 extracted production rows 上的 wall-geomean speedup 从 `1.1341x` 到 `2.7499x`。
 
-这些结果也开始进入 upstream 路径。[SGLang PR #27392](https://github.com/sgl-project/sglang/pull/27392) 给 Qwen-Image-2512 增加 B200 native diffusion norm-scale-shift fast path，在单张 B200 上报告 full request `1.081x`、denoise wall `1.093x` 加速。[SGLang PR #28051](https://github.com/sgl-project/sglang/pull/28051) 把 B200 `fused_inplace_qknorm_rope` 路径拆成单独改动，profiler 里 target qknorm+RoPE CUDA work 从 `24.087 ms / 1440 calls` 变为 `18.081 ms / 720 calls + 1.896 ms / 720 calls`，约 `1.21x` kernel-level speedup。
+第一个 upstream 结果已经落地。[SGLang PR #27392](https://github.com/sgl-project/sglang/pull/27392) 为 Qwen-Image-2512 合入了 B200 native diffusion norm-scale-shift CUDA fast path。在单张 B200 上，双方各 5 次 interleaved 运行显示 full request `1.125x`、denoise wall `1.130x` 加速；profiler attribution 显示 target norm-scale-shift kernel group 提升 `1.279x`。
+
+另外两个 KDA-Pilot follow-up PR 把同一套流程扩展到了 diffusion 之外。[SGLang PR #29126](https://github.com/sgl-project/sglang/pull/29126) 面向 B200 FP8 `scaled_mm` 的 `M == 1` decode 场景增加 native GEMV fast path，在覆盖的 shape 上报告 `1.89x` 到 `2.56x` kernel-level speedup。[SGLang PR #29134](https://github.com/sgl-project/sglang/pull/29134) 面向非 2 次幂 MoE expert 数量，将两次 launch 的 `topk_sigmoid` workspace 路径替换为 fused kernel，在测量的 B200 shape 上报告约 `1.74x` geomean kernel-level speedup。两个 PR 目前仍在 review，因此这里仅作为合并前的 kernel-level evidence 来看。
 
 ![KDA-Pilot B200 diffusion kernel results](https://raw.githubusercontent.com/BBuf/how-to-optim-algorithm-in-cuda/master/large-language-model/sglang/assets/kda-pilot-b200-speedups.svg)
 
