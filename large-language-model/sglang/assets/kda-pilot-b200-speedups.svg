@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1040" height="560" viewBox="0 0 1040 560" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" width="1040" height="700" viewBox="0 0 1040 700" role="img" aria-labelledby="title desc">
   <title id="title">KDA-Pilot B200 diffusion kernel speedups</title>
-  <desc id="desc">A bar chart of B200 wall geomean speedups from KDA-Pilot diffusion kernel tasks.</desc>
+  <desc id="desc">A bar chart of B200 speedup evidence from KDA-Pilot diffusion kernel tasks, including the residual-gate speedup reported by SGLang PR 29361.</desc>
   <defs>
     <style>
       .bg { fill: #fbfbf7; }
@@ -17,18 +17,19 @@
     </style>
   </defs>
 
-  <rect class="bg" x="0" y="0" width="1040" height="560"/>
+  <rect class="bg" x="0" y="0" width="1040" height="700"/>
   <text class="title" x="56" y="50">KDA-Pilot B200 Diffusion Kernel Results</text>
-  <text class="subtitle" x="56" y="78">Wall-geomean speedup over SGLang/Triton/CuTe-DSL baselines. Wall time includes Python dispatch, wrappers, launch, and synchronization overhead.</text>
+  <text class="subtitle" x="56" y="78">B200 evidence over SGLang/Triton/CuTe-DSL baselines. Rows include dispatch, launch, and synchronization overhead when available.</text>
+  <text class="subtitle" x="56" y="98">residual_gate_add uses the B200 LTX-2.3 Triton-row result reported by merged SGLang PR #29361.</text>
 
-  <line class="grid" x1="460" y1="104" x2="460" y2="444"/>
-  <line class="grid" x1="660" y1="104" x2="660" y2="444"/>
-  <line class="grid" x1="820" y1="104" x2="820" y2="444"/>
-  <line class="axis" x1="260" y1="444" x2="842" y2="444"/>
-  <text class="tick" x="254" y="466">0x</text>
-  <text class="tick" x="452" y="466">1x</text>
-  <text class="tick" x="652" y="466">2x</text>
-  <text class="tick" x="806" y="466">2.8x</text>
+  <line class="grid" x1="460" y1="112" x2="460" y2="592"/>
+  <line class="grid" x1="660" y1="112" x2="660" y2="592"/>
+  <line class="grid" x1="820" y1="112" x2="820" y2="592"/>
+  <line class="axis" x1="260" y1="592" x2="842" y2="592"/>
+  <text class="tick" x="254" y="614">0x</text>
+  <text class="tick" x="452" y="614">1x</text>
+  <text class="tick" x="652" y="614">2x</text>
+  <text class="tick" x="806" y="614">2.8x</text>
 
   <text class="label" x="58" y="132">qknorm_rope</text>
   <rect class="bar1" x="260" y="112" width="227" height="25" rx="4"/>
@@ -58,5 +59,17 @@
   <rect class="bar3" x="260" y="388" width="462" height="25" rx="4"/>
   <text class="value" x="735" y="407">2.3118x</text>
 
-  <text class="subtitle" x="56" y="514">Source: BBuf/KDA-Pilot README and task benchmark ledgers, June 2026.</text>
+  <text class="label" x="58" y="454">attention_concat_copy</text>
+  <rect class="bar1" x="260" y="434" width="260" height="25" rx="4"/>
+  <text class="value" x="533" y="453">1.30x</text>
+
+  <text class="label" x="58" y="500">causal_conv3d_cat_pad</text>
+  <rect class="bar3" x="260" y="480" width="412" height="25" rx="4"/>
+  <text class="value" x="685" y="499">2.06x</text>
+
+  <text class="label" x="58" y="546">residual_gate_add</text>
+  <rect class="bar1" x="260" y="526" width="222" height="25" rx="4"/>
+  <text class="value" x="495" y="545">1.11x</text>
+
+  <text class="subtitle" x="56" y="664">Source: BBuf/KDA-Pilot README, task benchmark ledgers, and SGLang PR #29361, June 2026.</text>
 </svg>
