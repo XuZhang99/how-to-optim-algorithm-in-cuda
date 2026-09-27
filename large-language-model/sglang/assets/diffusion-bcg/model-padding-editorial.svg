@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="1080" viewBox="0 0 960 1080">
+<defs>
+  <marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4" orient="auto"><path d="M1 1 L5 4 L1 7" fill="none" stroke="#30332f" stroke-width="1.4"/></marker>
+  <pattern id="hatch" width="9" height="9" patternUnits="userSpaceOnUse"><path d="M-2 2 L2 -2 M0 9 L9 0 M7 11 L11 7" stroke="#b5b7af" stroke-width="1"/></pattern>
+  <style>text {font-family: 'PingFang SC', 'Helvetica Neue', sans-serif; fill: #30332f;} .minor {fill:#6c7068}</style>
+</defs>
+<rect width="960" height="1080" fill="#f0eee6"/>
+<text x="52" y="72" font-size="39" font-weight="600" fill="#30332f" style="fill:#30332f" text-anchor="start">几种模型的 Prompt Padding</text>
+<text x="54" y="116" font-size="23" font-weight="400" fill="#6c7068" style="fill:#6c7068" text-anchor="start">SANA / Qwen-Image、Z-Image 和固定文本长度模型</text>
+<rect x="36" y="157" width="888" height="284" rx="14" fill="#faf9f5" stroke="none" stroke-width="1.6"/>
+<text x="64" y="205" font-size="29" font-weight="600" fill="#30332f" style="fill:#30332f" text-anchor="start">SANA / Qwen-Image</text>
+<text x="64" y="240" font-size="24" font-weight="400" fill="#6c7068" style="fill:#6c7068" text-anchor="start">新增位置由 mask 排除，可以合并到同一 bucket</text>
+<text x="64" y="298" font-size="27" font-weight="400" fill="#30332f" style="fill:#30332f" text-anchor="start">19 → 64</text>
+<rect x="260" y="268" width="608" height="43" rx="0" fill="#e4e4dd" stroke="none" stroke-width="1.6"/>
+<rect x="260" y="268" width="180" height="43" rx="0" fill="#c7bfd5" stroke="none" stroke-width="1.6"/>
+<rect x="440" y="268" width="428" height="43" rx="0" fill="url(#hatch)" stroke="none" stroke-width="1.6"/>
+<rect x="260" y="268" width="608" height="43" fill="none" stroke="#8b897f"/>
+<text x="64" y="364" font-size="27" font-weight="400" fill="#30332f" style="fill:#30332f" text-anchor="start">47 → 64</text>
+<rect x="260" y="334" width="608" height="43" rx="0" fill="#e4e4dd" stroke="none" stroke-width="1.6"/>
+<rect x="260" y="334" width="446" height="43" rx="0" fill="#c7bfd5" stroke="none" stroke-width="1.6"/>
+<rect x="706" y="334" width="162" height="43" rx="0" fill="url(#hatch)" stroke="none" stroke-width="1.6"/>
+<rect x="260" y="334" width="608" height="43" fill="none" stroke="#8b897f"/>
+<rect x="261" y="403" width="17" height="17" rx="0" fill="#c7bfd5" stroke="none" stroke-width="1.6"/>
+<text x="288" y="419" font-size="21" font-weight="400" fill="#30332f" style="fill:#30332f" text-anchor="start">真实文本</text>
+<rect x="464" y="403" width="17" height="17" rx="0" fill="url(#hatch)" stroke="#b5b7af" stroke-width="1.6"/>
+<text x="491" y="419" font-size="21" font-weight="400" fill="#30332f" style="fill:#30332f" text-anchor="start">masked padding</text>
+<rect x="36" y="462" width="888" height="278" rx="14" fill="#faf9f5" stroke="none" stroke-width="1.6"/>
+<text x="64" y="510" font-size="29" font-weight="600" fill="#30332f" style="fill:#30332f" text-anchor="start">Z-Image</text>
+<text x="64" y="547" font-size="24" font-weight="400" fill="#6c7068" style="fill:#6c7068" text-anchor="start">原生 learned pad token 会参与 attention</text>
+<text x="64" y="598" font-size="25" font-weight="400" fill="#30332f" style="fill:#30332f" text-anchor="start">原生长度</text>
+<rect x="260" y="567" width="380" height="44" rx="0" fill="#c7bfd5" stroke="none" stroke-width="1.6"/>
+<rect x="580" y="567" width="60" height="44" rx="0" fill="#d6a48b" stroke="none" stroke-width="1.6"/>
+<text x="450" y="599" font-size="24" font-weight="400" fill="#30332f" style="fill:#30332f" text-anchor="middle">保留原生长度</text>
+<rect x="640" y="567" width="228" height="44" rx="0" fill="none" stroke="#b6b8b0" stroke-width="1.6"/>
+<path d="M650 604 L858 574 M650 574 L858 604" stroke="#a8735e" stroke-width="1.8"/>
+<text x="753" y="649" font-size="23" font-weight="400" fill="#30332f" style="fill:#30332f" text-anchor="middle">不额外扩长</text>
+<text x="64" y="706" font-size="24" font-weight="400" fill="#30332f" style="fill:#30332f" text-anchor="start">不同 native length 分开捕获；未覆盖的长度走 Eager。</text>
+<rect x="36" y="761" width="888" height="268" rx="14" fill="#faf9f5" stroke="none" stroke-width="1.6"/>
+<text x="64" y="810" font-size="29" font-weight="600" fill="#30332f" style="fill:#30332f" text-anchor="start">文本编码已经固定长度</text>
+<text x="64" y="849" font-size="24" font-weight="400" fill="#6c7068" style="fill:#6c7068" text-anchor="start">文本 shape 已相同，无须再次补齐</text>
+<text x="197" y="899" font-size="25" font-weight="400" fill="#30332f" style="fill:#30332f" text-anchor="middle">SANA-Video</text>
+<rect x="92" y="918" width="210" height="58" rx="8" fill="#b8c8bc" stroke="none" stroke-width="1.6"/>
+<text x="197" y="958" font-size="31" font-weight="500" fill="#30332f" style="fill:#30332f" text-anchor="middle">300</text>
+<text x="480" y="899" font-size="25" font-weight="400" fill="#30332f" style="fill:#30332f" text-anchor="middle">LongCat</text>
+<rect x="375" y="918" width="210" height="58" rx="8" fill="#b8c8bc" stroke="none" stroke-width="1.6"/>
+<text x="480" y="958" font-size="31" font-weight="500" fill="#30332f" style="fill:#30332f" text-anchor="middle">512</text>
+<text x="763" y="899" font-size="25" font-weight="400" fill="#30332f" style="fill:#30332f" text-anchor="middle">LTX-2 / 2.3</text>
+<rect x="658" y="918" width="210" height="58" rx="8" fill="#b8c8bc" stroke="none" stroke-width="1.6"/>
+<text x="763" y="958" font-size="31" font-weight="500" fill="#30332f" style="fill:#30332f" text-anchor="middle">1024</text>
+<text x="64" y="1009" font-size="21" font-weight="400" fill="#6c7068" style="fill:#6c7068" text-anchor="start">SANA-Video 为默认长度；自定义长度另走 padding。</text>
+</svg>

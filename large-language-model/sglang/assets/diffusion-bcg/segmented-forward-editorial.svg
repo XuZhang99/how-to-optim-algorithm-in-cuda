@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="890" viewBox="0 0 960 890">
+<defs>
+  <marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4" orient="auto"><path d="M1 1 L5 4 L1 7" fill="none" stroke="#30332f" stroke-width="1.4"/></marker>
+  <pattern id="hatch" width="9" height="9" patternUnits="userSpaceOnUse"><path d="M-2 2 L2 -2 M0 9 L9 0 M7 11 L11 7" stroke="#b5b7af" stroke-width="1"/></pattern>
+  <style>text {font-family: 'PingFang SC', 'Helvetica Neue', sans-serif; fill: #30332f;} .minor {fill:#6c7068}</style>
+</defs>
+<rect width="960" height="890" fill="#f0eee6"/>
+<text x="52" y="72" font-size="39" font-weight="600" fill="#30332f" style="fill:#30332f" text-anchor="start">DiT 的 BCG Capture 和 Replay</text>
+<text x="54" y="116" font-size="23" font-weight="400" fill="#6c7068" style="fill:#6c7068" text-anchor="start">分段 capture DiT forward，Attention 使用 Eager 执行</text>
+<rect x="36" y="154" width="888" height="280" rx="14" fill="#faf9f5" stroke="none" stroke-width="1.6"/>
+<text x="62" y="201" font-size="29" font-weight="600" fill="#30332f" style="fill:#30332f" text-anchor="start">Capture</text>
+<text x="220" y="201" font-size="23" font-weight="400" fill="#6c7068" style="fill:#6c7068" text-anchor="start">warmup 时执行</text>
+<rect x="36" y="455" width="888" height="280" rx="14" fill="#faf9f5" stroke="none" stroke-width="1.6"/>
+<text x="62" y="502" font-size="29" font-weight="600" fill="#30332f" style="fill:#30332f" text-anchor="start">Replay</text>
+<text x="220" y="502" font-size="23" font-weight="400" fill="#6c7068" style="fill:#6c7068" text-anchor="start">每个 denoising step 执行</text>
+<rect x="62" y="244" width="234" height="104" rx="10" fill="#d6a48b" stroke="none" stroke-width="1.6"/>
+<text x="179" y="287" font-size="27" font-weight="500" fill="#30332f" style="fill:#30332f" text-anchor="middle">Segment 0</text>
+<text x="179" y="322" font-size="23" font-weight="400" fill="#30332f" style="fill:#30332f" text-anchor="middle">Capture</text>
+<rect x="363" y="244" width="234" height="104" rx="10" fill="#b8c8bc" stroke="none" stroke-width="1.6"/>
+<text x="480" y="287" font-size="27" font-weight="500" fill="#30332f" style="fill:#30332f" text-anchor="middle">Attention</text>
+<text x="480" y="322" font-size="23" font-weight="400" fill="#30332f" style="fill:#30332f" text-anchor="middle">Eager</text>
+<rect x="664" y="244" width="234" height="104" rx="10" fill="#d6a48b" stroke="none" stroke-width="1.6"/>
+<text x="781" y="287" font-size="27" font-weight="500" fill="#30332f" style="fill:#30332f" text-anchor="middle">Segment 1</text>
+<text x="781" y="322" font-size="23" font-weight="400" fill="#30332f" style="fill:#30332f" text-anchor="middle">Capture</text>
+<path d="M296 296 L356 296" stroke="#30332f" stroke-width="2.2" fill="none" marker-end="url(#arrow)"/>
+<path d="M597 296 L657 296" stroke="#30332f" stroke-width="2.2" fill="none" marker-end="url(#arrow)"/>
+<text x="179" y="376" font-size="22" font-weight="400" fill="#30332f" style="fill:#30332f" text-anchor="middle">QKV / Norm / RoPE</text>
+<text x="480" y="376" font-size="22" font-weight="400" fill="#30332f" style="fill:#30332f" text-anchor="middle">根据当前输入计算</text>
+<text x="781" y="376" font-size="22" font-weight="400" fill="#30332f" style="fill:#30332f" text-anchor="middle">Proj / Residual / MLP</text>
+<rect x="62" y="545" width="234" height="104" rx="10" fill="#d6a48b" stroke="none" stroke-width="1.6"/>
+<text x="179" y="588" font-size="27" font-weight="500" fill="#30332f" style="fill:#30332f" text-anchor="middle">Segment 0</text>
+<text x="179" y="623" font-size="23" font-weight="400" fill="#30332f" style="fill:#30332f" text-anchor="middle">Replay</text>
+<rect x="363" y="545" width="234" height="104" rx="10" fill="#b8c8bc" stroke="none" stroke-width="1.6"/>
+<text x="480" y="588" font-size="27" font-weight="500" fill="#30332f" style="fill:#30332f" text-anchor="middle">Attention</text>
+<text x="480" y="623" font-size="23" font-weight="400" fill="#30332f" style="fill:#30332f" text-anchor="middle">Eager</text>
+<rect x="664" y="545" width="234" height="104" rx="10" fill="#d6a48b" stroke="none" stroke-width="1.6"/>
+<text x="781" y="588" font-size="27" font-weight="500" fill="#30332f" style="fill:#30332f" text-anchor="middle">Segment 1</text>
+<text x="781" y="623" font-size="23" font-weight="400" fill="#30332f" style="fill:#30332f" text-anchor="middle">Replay</text>
+<path d="M296 597 L356 597" stroke="#30332f" stroke-width="2.2" fill="none" marker-end="url(#arrow)"/>
+<path d="M597 597 L657 597" stroke="#30332f" stroke-width="2.2" fill="none" marker-end="url(#arrow)"/>
+<text x="179" y="689" font-size="23" font-weight="400" fill="#30332f" style="fill:#30332f" text-anchor="middle">读取本次输入</text>
+<text x="480" y="689" font-size="23" font-weight="400" fill="#30332f" style="fill:#30332f" text-anchor="middle">重新计算 Attention</text>
+<text x="781" y="689" font-size="23" font-weight="400" fill="#30332f" style="fill:#30332f" text-anchor="middle">读取固定 buffer</text>
+<path d="M624 306 L624 400 L686 400" stroke="#30332f" stroke-width="1.6" fill="none"/>
+<text x="697" y="408" font-size="21" font-weight="400" fill="#30332f" style="fill:#30332f" text-anchor="start">保留输出 buffer</text>
+<path d="M624 600 L624 713 L683 713" stroke="#30332f" stroke-width="1.6" fill="none"/>
+<text x="694" y="721" font-size="21" font-weight="400" fill="#30332f" style="fill:#30332f" text-anchor="start">copy_ 回原地址</text>
+<path d="M60 771 H899" stroke="#c5c7be"/>
+<text x="60" y="815" font-size="26" font-weight="500" fill="#30332f" style="fill:#30332f" text-anchor="start">Eager output buffer 需要保留强引用。</text>
+<text x="60" y="854" font-size="24" font-weight="400" fill="#6c7068" style="fill:#6c7068" text-anchor="start">后一个 graph segment 会读取 capture 时的地址。</text>
+</svg>
